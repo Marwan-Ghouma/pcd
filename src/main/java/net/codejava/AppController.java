@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +24,25 @@ public class AppController {
 	
 	@GetMapping("")
 	public String viewHomePage() {
-		return "index";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+
+
+			return "index";
+		}
+
+		return "redirect:/users";
+
 	}
 	
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
-		model.addAttribute("user", new User());
-		
-		return "signup_form";
+
+			model.addAttribute("user", new User());
+
+			return "signup_form";
+
+
 	}
 	
 	@PostMapping("/process_register")
