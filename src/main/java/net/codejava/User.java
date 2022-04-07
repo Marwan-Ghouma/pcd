@@ -32,6 +32,13 @@ public class User {
 	
 	private boolean enabled;
 
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
+
+	@Column(name = "reset_password_token")
+	private String resetPasswordToken;
+
 	public Long getId() {
 		return id;
 	}
