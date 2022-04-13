@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class AdminCont {
     @GetMapping("/admin")
-    public String loginPage() {
+    public String adminPage() {
 
         return "admin";
     }

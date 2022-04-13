@@ -56,7 +56,9 @@ public class UserServices {
 		sendVerificationEmail(user, siteURL);
 	}
 
-
+	public List<Role> listRoles() {
+		return roleRepo.findAll();
+	}
 
 
 	private void sendVerificationEmail(User user, String siteURL) 
