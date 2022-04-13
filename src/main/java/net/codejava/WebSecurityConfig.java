@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+				.antMatchers("/admin").access("hasRole('admin')")
 			.antMatchers("/users").authenticated()
 			.anyRequest().permitAll()
 			.and()
@@ -56,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.logout().logoutSuccessUrl("/").permitAll();
 	}
+
 	
 	
 }

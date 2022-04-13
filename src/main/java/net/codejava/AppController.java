@@ -44,6 +44,7 @@ public class AppController {
 
 
 	}
+
 	
 	@PostMapping("/process_register")
 	public String processRegister(User user, HttpServletRequest request) 

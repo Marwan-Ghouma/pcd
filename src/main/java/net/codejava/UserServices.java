@@ -24,6 +24,10 @@ public class UserServices {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+
+	private RoleRepository roleRepo;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -40,12 +44,21 @@ public class UserServices {
 		String randomCode = RandomString.make(64);
 		user.setVerificationCode(randomCode);
 		user.setEnabled(false);
+
+
+			Role roleUser = roleRepo.findByName("User");
+			user.addRole(roleUser);
+
+
 		
 		repo.save(user);
 		
 		sendVerificationEmail(user, siteURL);
 	}
-	
+
+
+
+
 	private void sendVerificationEmail(User user, String siteURL) 
 			throws MessagingException, UnsupportedEncodingException {
 		String toAddress = user.getEmail();
