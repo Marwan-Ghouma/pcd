@@ -17,18 +17,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RoleRepositoryTests {
 
 	@Autowired private RoleRepository repo;
-	
+
 	@Test
 	public void testCreateRoles() {
-		Role user = new Role("User");
-		Role admin = new Role("Admin");
-		Role customer = new Role("Customer");
-		
+		Role user = new Role("ROLE_User");
+		Role admin = new Role("ROLE_Admin");
+		Role customer = new Role("ROLE_Customer");
+
 		repo.saveAll(List.of(user, admin, customer));
-		
+
 		List<Role> listRoles = repo.findAll();
-		
+
 		assertThat(listRoles.size()).isEqualTo(3);
 	}
-	
+
 }

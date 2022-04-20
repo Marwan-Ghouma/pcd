@@ -24,6 +24,28 @@ public class User {
 	
 	@Column(name = "last_name", nullable = false, length = 20)
 	private String lastName;
+
+	public String getCin() {
+		return cin;
+	}
+
+	public void setCin(String cin) {
+		this.cin = cin;
+	}
+
+	public String getRib() {
+		return rib;
+	}
+
+	public void setRib(String rib) {
+		this.rib = rib;
+	}
+
+	@Column(name = "cin", nullable = false, length = 20)
+	private String cin;
+
+	@Column(name = "rib", nullable = false, length = 20)
+	private String rib;
 	
 	@Column(name = "verification_code", length = 64)
 	private String verificationCode;

@@ -43,6 +43,22 @@
 							required minlength="2" maxlength="20" />
 				</div>
 			</div>
+
+			<div class="form-group row">
+				<label class="col-4 col-form-label">Cin: </label>
+				<div class="col-8">
+					<input type="text" th:field="*{cin}" class="form-control"
+						   required minlength="2" maxlength="20"/>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-4 col-form-label">Rib: </label>
+				<div class="col-8">
+					<input type="text" th:field="*{rib}" class="form-control"
+						   required minlength="2" maxlength="30"/>
+				</div>
+			</div>
 			
 			<div>
 				<button type="submit" class="btn btn-primary">Sign Up</button> 
