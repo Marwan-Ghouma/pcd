@@ -46,7 +46,7 @@ public class UserServices {
 		user.setEnabled(false);
 
 
-			Role roleUser = roleRepo.findByName("User");
+			Role roleUser = roleRepo.findByName("Role_User");
 			user.addRole(roleUser);
 
 
