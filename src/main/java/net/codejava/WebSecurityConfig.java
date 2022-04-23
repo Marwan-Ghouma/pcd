@@ -12,9 +12,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
+
+
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
@@ -46,7 +55,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
+		http
+				.csrf().disable()
+				.authorizeRequests()
 				.antMatchers("/admin/**").hasAuthority("User")
 				.antMatchers("/users").authenticated()
 				.anyRequest().permitAll()
@@ -65,6 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		;
 	}
 
-	
+
+
+
 	
 }

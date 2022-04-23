@@ -9,7 +9,7 @@ import net.codejava.service.AccountService;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class AccountController {
     @Autowired
     private AccountService service;
