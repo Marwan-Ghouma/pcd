@@ -129,5 +129,6 @@ public class UserServices {
 		user.setResetPasswordToken(null);
 		repo.save(user);
 	}
-	
+
+
 }

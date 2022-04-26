@@ -17,9 +17,9 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
     private long id;
 
-    private long sourceAccountId;
+    private long AdminId;
 
-    private long targetAccountId;
+    private long ClientId;
 
     private String targetOwnerName;
 
