@@ -1,6 +1,7 @@
 package net.codejava;
 
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -11,12 +12,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AppController {
@@ -89,6 +91,10 @@ public class AppController {
 			return "verify_fail";
 		}
 	}
+
+
+
+
 
 
 }

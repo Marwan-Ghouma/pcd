@@ -1,8 +1,12 @@
 package net.codejava;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import net.codejava.model.Transaction;
+
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,6 +29,18 @@ public class User {
 	@Column(name = "last_name", nullable = false, length = 20)
 	private String lastName;
 
+	@OneToMany(mappedBy = "client")
+	@JsonIgnore
+	private List<Transaction> transactionList;
+
+	public List<Transaction> getTransactionList() {
+		return transactionList;
+	}
+
+	public void setTransactionList(List<Transaction> transactionList) {
+		this.transactionList = transactionList;
+	}
+
 	public String getCin() {
 		return cin;
 	}
@@ -44,7 +60,7 @@ public class User {
 	@Column(name = "cin", nullable = false, length = 20)
 	private String cin;
 
-	@Column(name = "rib", nullable = false, length = 20)
+	@Column(name = "rib", nullable = false, length = 20,unique = true)
 	private String rib;
 	
 	@Column(name = "verification_code", length = 64)

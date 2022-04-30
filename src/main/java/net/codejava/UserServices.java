@@ -31,7 +31,10 @@ public class UserServices {
 	
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
+	public User getById(long id){
+		return repo.findById(id).get();
+	}
 	public List<User> listAll() {
 		return repo.findAll();
 	}
@@ -131,4 +134,10 @@ public class UserServices {
 	}
 
 
+	public User getByName(String user) {
+		return repo.findByName(user) ;
+	}
+
+	public User getByEmail(String userEmail) {return repo.findByEmail(userEmail);
+	}
 }

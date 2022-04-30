@@ -1,8 +1,12 @@
 package net.codejava.model;
 
+import ch.qos.logback.core.net.server.Client;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.codejava.User;
 
 import javax.persistence.*;
 
@@ -11,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "transaction")
-public class Transaction {
+public class  Transaction {
     @Id
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
@@ -19,7 +23,10 @@ public class Transaction {
 
     private long AdminId;
 
-    private long ClientId;
+
+    @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private User client;
 
     private String targetOwnerName;
 

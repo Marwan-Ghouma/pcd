@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -17,8 +18,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	public User findByResetPasswordToken(String token);
 
-
-
+	@Query("SELECT c FROM User c WHERE c.firstName = ?1")
+	public User findByName(String user);
 }
 
 

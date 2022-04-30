@@ -13,7 +13,7 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
     @Query(" FROM Transaction WHERE AdminId = ?1")
     List<Transaction> getAdminsTransaction(long receiver);
     @Query(" FROM Transaction WHERE ClientId = ?1")
-    List<Transaction> getClientsTransaction(long sender);
+    List<Transaction>  getClientsTransaction(long sender);
 
 
 }
