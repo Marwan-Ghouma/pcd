@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,17 @@ public class UserServices {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+
+	private RoleRepository roleRepo;
 	
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
+	public User getById(long id){
+		return repo.findById(id).get();
+	}
 	public List<User> listAll() {
 		return repo.findAll();
 	}
@@ -39,17 +47,28 @@ public class UserServices {
 		String randomCode = RandomString.make(64);
 		user.setVerificationCode(randomCode);
 		user.setEnabled(false);
+
+
+			Role roleUser = roleRepo.findByName("Role_User");
+			user.addRole(roleUser);
+
+
 		
 		repo.save(user);
 		
 		sendVerificationEmail(user, siteURL);
 	}
-	
+
+	public List<Role> listRoles() {
+		return roleRepo.findAll();
+	}
+
+
 	private void sendVerificationEmail(User user, String siteURL) 
 			throws MessagingException, UnsupportedEncodingException {
 		String toAddress = user.getEmail();
-		String fromAddress = "your email address";
-		String senderName = "your company name";
+		String fromAddress = "pcdtest8@gmail.com";
+		String senderName = "pcd";
 		String subject = "Please verify your registration";
 		String content = "Dear [[name]],<br>"
 				+ "Please click the link below to verify your registration:<br>"
@@ -90,5 +109,35 @@ public class UserServices {
 		}
 		
 	}
-	
+
+	public void updateResetPasswordToken(String token, String email) throws CustomerNotFoundException {
+		User customer = repo.findByEmail(email);
+		if (customer != null) {
+			customer.setResetPasswordToken(token);
+			repo.save(customer);
+		} else {
+			throw new CustomerNotFoundException("Could not find any customer with the email " + email);
+		}
+	}
+
+	public User getByResetPasswordToken(String token) {
+		return repo.findByResetPasswordToken(token);
+	}
+
+	public void updatePassword(User user, String newPassword) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassword = passwordEncoder.encode(newPassword);
+		user.setPassword(encodedPassword);
+
+		user.setResetPasswordToken(null);
+		repo.save(user);
+	}
+
+
+	public User getByName(String user) {
+		return repo.findByName(user) ;
+	}
+
+	public User getByEmail(String userEmail) {return repo.findByEmail(userEmail);
+	}
 }

@@ -1,11 +1,13 @@
 package net.codejava;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import net.codejava.model.Transaction;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -26,11 +28,62 @@ public class User {
 	
 	@Column(name = "last_name", nullable = false, length = 20)
 	private String lastName;
+
+	@OneToMany(mappedBy = "client")
+	@JsonIgnore
+	private List<Transaction> transactionList;
+
+	public List<Transaction> getTransactionList() {
+		return transactionList;
+	}
+
+	public void setTransactionList(List<Transaction> transactionList) {
+		this.transactionList = transactionList;
+	}
+
+	public String getCin() {
+		return cin;
+	}
+
+	public void setCin(String cin) {
+		this.cin = cin;
+	}
+
+	public String getRib() {
+		return rib;
+	}
+
+	public void setRib(String rib) {
+		this.rib = rib;
+	}
+
+	@Column(name = "cin", nullable = false, length = 20)
+	private String cin;
+
+	@Column(name = "rib", nullable = false, length = 20,unique = true)
+	private String rib;
 	
 	@Column(name = "verification_code", length = 64)
 	private String verificationCode;
 	
 	private boolean enabled;
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
+
+	@Column(name = "reset_password_token")
+	private String resetPasswordToken;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "users_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id")
+	)
+	private Set<Role> roles = new HashSet<>();
+
+
 
 	public Long getId() {
 		return id;
@@ -90,6 +143,18 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public void addRole(Role role) {
+		this.roles.add(role);
 	}
 
 	
